@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ucapan Balon Terbang</title>
+  <style>
+    body {
+      background: linear-gradient(to top, #ffe6eb 60%, #b3e0ff 100%);
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe Script', cursive, sans-serif;
+    }
+    .balon {
+      position: absolute;
+      bottom: -120px;
+      width: 60px;
+      height: 80px;
+      z-index: 2;
+      opacity: 0.9;
+      animation: terbang 4s linear forwards;
+    }
+    .balon .balon-shape {
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle at 60% 30%, #fff 10%, transparent 70%), var(--warna, #f08080);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .balon .talinya {
+      width: 2px;
+      height: 40px;
+      background: #888;
+      position: absolute;
+      left: 29px;
+      top: 75px;
+      z-index: 1;
+    }
+    .love-letter {
+      opacity: 0;
+      background: #fff;
+      border: 2px solid #f08080;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(240,128,128,0.15);
+      padding: 32px 40px;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      transition: opacity 1s;
+      font-size: 1.2em;
+      color: #333;
+    }
+    .love-letter .heart {
+      font-size: 2em;
+      color: #f08080;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .love-letter .signature {
+      color: #f08080;
+      font-style: italic;
+      margin-top: 24px;
+    }
+    .show-letter .love-letter {
+      opacity: 1;
+    }
+    @keyframes terbang {
+      to {
+        transform: translateY(-110vh) scale(1.05);
+        opacity: 0.7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="balon-area"></div>
+  <div class="love-letter" id="loveLetter">
+    <span class="heart">🎈</span>
+    <div>Hai, kamu yang spesial!</div>
+    <div style="margin:18px 0;">
+      Semoga hari-harimu selalu penuh warna dan kebahagiaan.<br>
+      Terima kasih sudah menjadi alasan senyumku hari ini.<br>
+      <br>
+      Kamu luar biasa!
+    </div>
+    <div class="signature">
+      Dengan cinta,<br>
+      <b>Nama Kamu</b>
+    </div>
+  </div>
+  <script>
+    // Warna balon
+    const warnaBalon = ['#f08080', '#f38ea9', '#ffd966', '#b3e0ff', '#a3e635', '#ffb347'];
+    const balonArea = document.getElementById('balon-area');
+    const loveLetter = document.getElementById('loveLetter');
+    let balonCount = 7;
+    let selesai = 0;
+
+    for (let i = 0; i < balonCount; i++) {
+      const balon = document.createElement('div');
+      balon.className = 'balon';
+      balon.style.left = (15 + i * 12 + Math.random() * 10) + 'vw';
+      balon.style.animationDelay = (i * 0.4 + Math.random() * 0.5) + 's';
+      balon.innerHTML = `
+        <div class="balon-shape" style="--warna: ${warnaBalon[i % warnaBalon.length]}"></div>
+        <div class="talinya"></div>
+      `;
+      balon.addEventListener('animationend', () => {
+        selesai++;
+        if (selesai === balonCount) {
+          document.body.classList.add('show-letter');
+        }
+      });
+      balonArea.appendChild(balon);
+    }
+  </script>
+</body>
+</html>
